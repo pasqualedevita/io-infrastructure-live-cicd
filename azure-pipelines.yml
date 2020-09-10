@@ -75,6 +75,7 @@ jobs:
         displayName: teragrunt plan
         inputs:
           azureSubscription: "${{ parameters.SUBSCRIPTION }}"
+          addSpnToEnvironment: true
           scriptType: "bash"
           scriptLocation: "inlineScript"
           failOnStandardError: false
