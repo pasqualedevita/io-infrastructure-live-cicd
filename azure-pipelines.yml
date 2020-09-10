@@ -71,3 +71,15 @@ jobs:
             echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> $HOME/.bash_profile
             source $HOME/.bash_profile
             tgenv install
+
+      # 4. teragrunt plan
+      - task: AzureCLI@2
+        displayName: teragrunt plan
+        inputs:
+          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          failOnStandardError: false
+          inlineScript: |
+            cd dev/westeurope/dev-pasquale-test/storage_account
+            terragrunt plan
