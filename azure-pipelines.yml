@@ -81,5 +81,7 @@ jobs:
           scriptLocation: "inlineScript"
           failOnStandardError: false
           inlineScript: |
+            source $HOME/.bash_profile
+            cat $HOME/.bash_profile
             cd dev/westeurope/dev-pasquale-test/storage_account
             terragrunt plan
