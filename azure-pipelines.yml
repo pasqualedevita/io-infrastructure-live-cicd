@@ -51,9 +51,8 @@ jobs:
           scriptLocation: "inlineScript"
           failOnStandardError: true
           inlineScript: |
-            git clone https://github.com/tfutils/tfenv.git $HOME/.tfenv
+            git clone -q https://github.com/tfutils/tfenv.git $HOME/.tfenv
             ls -la
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             source $HOME/.bash_profile
             tfenv install
-            exit 0
