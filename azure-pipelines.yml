@@ -53,6 +53,6 @@ jobs:
           inlineScript: |
             git clone https://github.com/tfutils/tfenv.git $HOME/.tfenv
             ls -la
-            cat $HOME/.bash_profile
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
+            source $HOME/.bash_profile
             tfenv install
