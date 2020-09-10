@@ -56,3 +56,4 @@ jobs:
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             source $HOME/.bash_profile
             tfenv install
+            exit 0
