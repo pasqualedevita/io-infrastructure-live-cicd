@@ -85,5 +85,5 @@ jobs:
             export ARM_CLIENT_SECRET=$servicePrincipalKey
             export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
             export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
-            cd dev/westeurope/dev-pasquale-test/storage_account
+            cd dev/westeurope/dev-pasquale-test/resource_group
             terragrunt plan
