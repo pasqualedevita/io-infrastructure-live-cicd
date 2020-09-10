@@ -1,18 +1,10 @@
-# Azure DevOps pipeline for automating purge durable functions history.
-# Only specified parameters are applied, policies folder is ignored.
+# Azure DevOps pipeline for test terraform integrity.
 #
 # The following parameter needs to be set to identify the Azure subscription :
 # - SUBSCRIPTION: PROD-IO-SERVICE-CONN | DEV-IO-SERVICE-CONN
 #
 # The following pipeline parameters have to be setted for manual execution:
 # - SUBSCRIPTION: service connection name
-# - DRY_RUN: run pipeline without apply any changes
-# - STORAGE_ACCOUNT: storage account name to connect
-# - TASK_HUB: taskhub name setted in durable function host.json
-# - NO_DATE_FILTER: if true do not apply any date filter (ignore DAYS_BEFORE)
-# - DAYS_BEFORE: number of days to apply date filter (negative -> past, positive -> future)
-# - NO_STATUS_FILTER: if true do not apply any status filter (ignore LIST_STATUS)
-# - LIST_STATUS: filter orchestrator's status
 
 parameters:
   - name: "SUBSCRIPTION"
@@ -81,7 +73,7 @@ jobs:
           scriptLocation: "inlineScript"
           failOnStandardError: false
           inlineScript: |
+            ls -la $HOME/.ssh
             source $HOME/.bash_profile
-            cat $HOME/.bash_profile
             cd dev/westeurope/dev-pasquale-test/storage_account
             terragrunt plan
