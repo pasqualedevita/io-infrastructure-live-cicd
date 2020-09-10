@@ -42,7 +42,7 @@ jobs:
 
       # 2. Install terraform
       - task: AzureCLI@2
-        displayName: Purge History
+        displayName: Install terraform
         inputs:
           azureSubscription: "${{ parameters.SUBSCRIPTION }}"
           scriptType: "bash"
@@ -50,5 +50,6 @@ jobs:
           failOnStandardError: true
           inlineScript: |
             git clone https://github.com/kamatama41/tfenv.git ~/.tfenv
-            echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
-            tfenv install
+            ls -la ~/.tfenv
+            # echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
+            # tfenv install
