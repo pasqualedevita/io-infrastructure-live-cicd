@@ -27,7 +27,9 @@ pool:
   vmImage: "ubuntu-latest"
 
 # Only manual execution from Azure DevOps portal
-trigger: none
+# trigger: none
+trigger:
+  - master
 pr: none
 
 jobs:
@@ -49,8 +51,8 @@ jobs:
           scriptLocation: "inlineScript"
           failOnStandardError: true
           inlineScript: |
-            git clone https://github.com/kamatama41/tfenv.git ~/.tfenv
+            git clone https://github.com/kamatama41/tfenv.git $HOME/.tfenv
             ls -la ~/.tfenv
-            echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
+            echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             exit 0
             # tfenv install
