@@ -51,7 +51,8 @@ jobs:
           scriptLocation: "inlineScript"
           failOnStandardError: true
           inlineScript: |
-            git clone -q https://github.com/tfutils/tfenv.git $HOME/.tfenv
+            # git clone write on stderr https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-clone.html
+            git clone https://github.com/tfutils/tfenv.git $HOME/.tfenv 2>&1
             ls -la
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             source $HOME/.bash_profile
