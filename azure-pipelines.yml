@@ -49,9 +49,9 @@ jobs:
           azureSubscription: "${{ parameters.SUBSCRIPTION }}"
           scriptType: "bash"
           scriptLocation: "inlineScript"
-          # failOnStandardError: true
+          failOnStandardError: true
           inlineScript: |
-            git clone https://github.com/kamatama41/tfenv.git $HOME/.tfenv
+            git clone git@github.com:tfutils/tfenv.git $HOME/.tfenv
             ls -la ~/.tfenv
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             ls -la
