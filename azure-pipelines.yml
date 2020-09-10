@@ -42,7 +42,7 @@ jobs:
           targetType: "inline"
           script: '$id = "$(Build.BuildId)"; $date = Get-Date -Format "yyyy.MMdd"; Write-Host "##vso[build.updatebuildnumber]$date.$id"'
 
-      # 2. Install terraform
+      # 2. Install terraform -> tfenv
       - task: AzureCLI@2
         displayName: Install terraform
         inputs:
@@ -53,7 +53,21 @@ jobs:
           inlineScript: |
             # git clone write on stderr https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-clone.html
             git clone https://github.com/tfutils/tfenv.git $HOME/.tfenv
-            ls -la
             echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
             source $HOME/.bash_profile
             tfenv install
+
+      # 3. Install teragrunt -> tgenv
+      - task: AzureCLI@2
+        displayName: Install teragrunt
+        inputs:
+          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
+          scriptType: "bash"
+          scriptLocation: "inlineScript"
+          failOnStandardError: false
+          inlineScript: |
+            # git clone write on stderr https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-clone.html
+            git clone https://github.com/cunymatthieu/tgenv.git $HOME/.tgenv
+            echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> $HOME/.bash_profile
+            source $HOME/.bash_profile
+            tgenv install
