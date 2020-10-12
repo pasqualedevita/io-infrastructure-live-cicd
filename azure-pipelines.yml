@@ -18,4 +18,5 @@ jobs:
           script: '$id = "$(Build.BuildId)"; $date = Get-Date -Format "yyyy.MMdd"; Write-Host "##vso[build.updatebuildnumber]$date.$id"'
   - job: start_container
     container: 
-      image: hello-world:linux
+      image: registry.hub.docker.com/library/hello-world:linux
+      endpoint: 
