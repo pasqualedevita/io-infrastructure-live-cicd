@@ -1,89 +1,21 @@
-# Azure DevOps pipeline for test terraform integrity.
-#
-# The following parameter needs to be set to identify the Azure subscription :
-# - SUBSCRIPTION: PROD-IO-SERVICE-CONN | DEV-IO-SERVICE-CONN
-#
-# The following pipeline parameters have to be setted for manual execution:
-# - SUBSCRIPTION: service connection name
-
-parameters:
-  - name: "SUBSCRIPTION"
-    displayName: "Select the Azure subscription for which purge durable function history"
-    type: string
-    default: DEV-IO-SERVICE-CONN
-    values:
-      - PROD-IO-SERVICE-CONN
-      - DEV-IO-SERVICE-CONN
+# Azure DevOps pipeline.
 
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: 'ubuntu-latest'
 
 # Only manual execution from Azure DevOps portal
-# trigger: none
-trigger:
-  - master
+trigger: none
 pr: none
 
 jobs:
-  - job: terraform_integrity_check
+  - job: empty_job
     steps:
       # 1. Set the number of the run
       - task: PowerShell@2
         displayName: Update Run Number
         inputs:
-          targetType: "inline"
+          targetType: 'inline'
           script: '$id = "$(Build.BuildId)"; $date = Get-Date -Format "yyyy.MMdd"; Write-Host "##vso[build.updatebuildnumber]$date.$id"'
-
-      # 2. Install terraform -> tfenv
-      - task: AzureCLI@2
-        displayName: Install terraform
-        inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          failOnStandardError: false
-          inlineScript: |
-            # git clone write on stderr https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-clone.html
-            git clone https://github.com/tfutils/tfenv.git $HOME/.tfenv
-            echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> $HOME/.bash_profile
-            source $HOME/.bash_profile
-            tfenv install
-
-      # 3. Install teragrunt -> tgenv
-      - task: AzureCLI@2
-        displayName: Install teragrunt
-        inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          failOnStandardError: false
-          inlineScript: |
-            # git clone write on stderr https://mirrors.edge.kernel.org/pub/software/scm/git/docs/git-clone.html
-            git clone https://github.com/cunymatthieu/tgenv.git $HOME/.tgenv
-            echo 'export PATH="$HOME/.tgenv/bin:$PATH"' >> $HOME/.bash_profile
-            source $HOME/.bash_profile
-            tgenv install
-
-      # 4. Install SSH key
-      - task: InstallSSHKey@0
-        inputs:
-          knownHostsEntry: "github.com"
-          sshKeySecureFile: "id_rsa"
-
-      # 5. teragrunt plan
-      - task: AzureCLI@2
-        displayName: teragrunt plan
-        inputs:
-          azureSubscription: "${{ parameters.SUBSCRIPTION }}"
-          addSpnToEnvironment: true
-          scriptType: "bash"
-          scriptLocation: "inlineScript"
-          failOnStandardError: false
-          inlineScript: |
-            source $HOME/.bash_profile
-            export ARM_CLIENT_ID=$servicePrincipalId
-            export ARM_CLIENT_SECRET=$servicePrincipalKey
-            export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
-            export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
-            cd dev/westeurope/dev-pasquale-test/resource_group
-            terragrunt plan
+  - job: start_container
+    container: 
+      image: hello-world:linux
