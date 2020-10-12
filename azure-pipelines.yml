@@ -19,3 +19,5 @@ jobs:
   - job: start_container
     container: 
       image: registry.hub.docker.com/library/hello-world:linux
+    steps:
+    - script: echo bye
